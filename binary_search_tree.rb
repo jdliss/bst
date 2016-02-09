@@ -59,8 +59,27 @@ class BST
     end
   end
 
-  # def depth_of
-  #
-  # end
+  def depth_of(value, current = @root, depth = 0)
+    if @root == nil
+      return "Tree empty"
+    else
+      if value == current.data[1]
+        return depth
+      elsif value < current.data[1]
+        depth += 1
+        current = current.lchild
+        depth_of(value, current, depth)
+      else
+        depth += 1
+        current = current.rchild
+        depth_of(value, current, depth)
+      end
+    end
+  end
+
+  def max(current = @root)
+    @root.data[1]
+
+  end
 
 end
