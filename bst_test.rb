@@ -44,10 +44,16 @@ class BSTTest < Minitest::Test
   end
 
   def test_can_insert_node_in_tree
-    require 'pry'
-    binding.pry
     @tree.insert("The Godfather", 75)
     assert_equal true, @tree.include?(75)
+    @tree.insert("The Simpsons Movie", 100)
+    @tree.insert("Star Wars", 99)
+    @tree.insert("bad movie", 10)
+    @tree.insert("scary movie", 20)
+    assert_equal true, @tree.include?(20)
+    assert_equal true, @tree.include?(10)
+    assert_equal true, @tree.include?(99)
+    assert_equal true, @tree.include?(100)
   end
 
 end

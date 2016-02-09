@@ -1,5 +1,6 @@
 require_relative 'node'
 class BST
+  attr_reader :root
   def initialize(root = nil)
     @root = root
   end
@@ -12,43 +13,54 @@ class BST
     end
   end
 
-  def include?(value)
-    if value == @root.data[1]
-      true
-    elsif value < @root.data[1]
-      if @root.lchild == nil
-        false
-      else
-        include?(@root.lchild.data[1])
-      end
+  def include?(value, current = @root)
+    if current == nil
+      false
     else
-      if @root.rchild == nil
-        false
+      if value == current.data[1]
+        true
+      elsif value < current.data[1]
+        if current.lchild == nil
+          false
+        else
+          current = current.lchild
+          include?(current.data[1], current)
+        end
       else
-        include?(@root.rchild.data[1])
+        if current.rchild == nil
+          false
+        else
+          current = current.rchild
+          include?(current.data[1], current)
+        end
       end
     end
   end
 
   def insert(name, score, current = @root)
     if root? == nil
-      @root = Node.new(score, name)
+      @root = Node.new(name, score)
 
     elsif score < current.data[1]
       if current.lchild == nil
-        lchild = Node.new(score, name)
+        current.lchild = Node.new(name, score)
       else
         current = current.lchild
-        insert(score, name, current)
+        insert(name, score, current)
       end
 
-    else
+    elsif score > current.data[1]
       if current.rchild == nil
-        rchild = Node.new(score, name)
+        current.rchild = Node.new(name, score)
       else
         current = current.rchild
-        insert(score, name, current)
+        insert(name, score, current)
       end
     end
   end
+
+  def depth_of
+    
+  end
+
 end
