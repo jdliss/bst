@@ -59,8 +59,8 @@ class BST
     end
   end
 
-  def depth_of
-    
-  end
+  # def depth_of
+  #
+  # end
 
 end
