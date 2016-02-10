@@ -128,4 +128,50 @@ class BST
         insert(array[1], array[0].to_i)
     end
   end
+
+  def health
+    # TODO
+  end
+
+  def leaves(current = @root)
+    @leaves = 0
+
+    if current == nil
+      return nil
+    else
+      leaves_helper(current)
+    end
+
+    return @leaves
+  end
+
+  def leaves_helper(current)
+    if current.lchild == nil && current.rchild == nil
+      @leaves +=1
+    end
+
+    if current.lchild != nil
+      leaves_helper(current.lchild)
+    end
+
+    if current.rchild != nil
+      leaves_helper(current.rchild)
+    end
+    @leaves
+  end
+
+  def height(current = @root)
+    @height = 0
+
+    if current == nil
+      return nil
+    else
+      height_helper(current)
+    end
+
+    return @height
+  end
+
+
+
 end

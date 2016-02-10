@@ -3,6 +3,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require_relative 'binary_search_tree'
 require_relative 'node'
+require 'pry'
 
 class BSTTest < Minitest::Test
   def setup
@@ -94,7 +95,20 @@ class BSTTest < Minitest::Test
     assert_equal sorted, @tree.sort
   end
 
-  def can_build_new_tree_from_file
+  def test_can_build_new_tree_from_file
     new_tree = BST.new.load("movies.txt")
+  end
+
+  def test_can_find_leaves
+    tree = BST.new
+    tree.insert("root", 50)
+    tree.insert("lchild", 25)
+    tree.insert("rchild", 100)
+
+    assert_equal 2, tree.leaves
+
+    large_tree = BST.new
+    large_tree.load("movies.txt")
+    assert_equal 35, large_tree.leaves
   end
 end
