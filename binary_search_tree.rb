@@ -36,6 +36,9 @@ class BST
     end
   end
 
+  # simple recursion using base case and changing
+  # recursive call
+
   # def insert(name, score, current = @root)
   #   if @root == nil
   #     @root = Node.new(name, score)
@@ -50,6 +53,10 @@ class BST
   #     insert(name, score, current.rchild)
   #   end
   # end
+
+
+  # next method uses a base non-recursive insert method
+  # and a recursive insert_helper method
 
   # def insert(name, score, current = @root)
   #   if root? == nil
