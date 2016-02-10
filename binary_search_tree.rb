@@ -4,8 +4,6 @@ class BST
   attr_reader :root
   def initialize(root = nil)
     @root = root
-    @sorted = []
-    @data = {}
   end
 
   def root?
@@ -98,34 +96,28 @@ class BST
     end
   end
 
-  # def find_min_node(current = @root)
-  #   if current.lchild == nil
-  #     return current
-  #   else
-  #     current = current.lchild
-  #     find_min_node(current)
-  #   end
-  # end                                 # => :find_min_node
-
   def sort(current = @root)
-    if current.lchild == nil
-      current.data[1]
-      @data = { current.data[0] => current.data[1] }
-      @sorted.push(@data)
-      if current.rchild == nil
-        @data = { current.data[0] => current.data[1] }
-        @sorted << @data
-      elsif current.rchild != nil
-        if @sorted.include?(current.rchild.data[1]) != true
-          sort(current.rchild)
-        else
-          sort(current)
-        end
-      end
+    @sorted = []
+
+    if current == nil
+      nil
     else
-      sort(current.lchild)
+      sort_help(current)
     end
-    @sorted
+    return @sorted
+  end
+
+  def sort_help(current)
+    if current.lchild != nil
+      sort_help(current.lchild)
+    end
+
+    @sorted << { current.data[0] => current.data[1] }
+
+    if current.rchild != nil
+      sort_help(current.rchild)
+    end
+    return @sorted
   end
 
 end
