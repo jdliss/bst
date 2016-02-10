@@ -124,10 +124,9 @@ class BST
   def load(file)
     temp = CSV.read(file)
     temp.count do |array|
-        array[1].lstrip!
-        if include?(array[0].to_i) != true
-          insert(array[1], array[0].to_i)
-        end
+      if include?(array[0].to_i) != true
+        insert(array[1].lstrip, array[0].to_i)
+      end
     end
   end
 
