@@ -96,7 +96,8 @@ class BSTTest < Minitest::Test
   end
 
   def test_can_build_new_tree_from_file
-    new_tree = BST.new.load("movies.txt")
+    new_tree = BST.new
+    assert_equal 100, new_tree.load("movies.txt")
   end
 
   def test_can_find_leaves
@@ -109,15 +110,21 @@ class BSTTest < Minitest::Test
 
     large_tree = BST.new
     large_tree.load("movies.txt")
-    assert_equal 35, large_tree.leaves
+    assert_equal 36, large_tree.leaves
   end
 
-  def test_can_find_hight
-    tree = BST.new
-    tree.insert("root", 50)
-    tree.insert("lchild", 25)
-    tree.insert("rchild", 100)
+  def test_can_find_height
+    assert_equal 5, @tree.height
 
-    assert_equal 1, tree.height
+    large_tree = BST.new
+    large_tree.load("movies.txt")
+    assert_equal 13, large_tree.height
+
+    empty_tree = BST.new
+    assert_equal nil, empty_tree.height
+
+    root_tree = BST.new
+    root_tree.insert("root", 0)
+    assert_equal 0, root_tree.height
   end
 end

@@ -30,11 +30,9 @@ class BST
     end
   end
 
-  def create_root(name, score)
-    if @root.nil?
-      @root = Node.new(name, score)
-    end
-  end
+
+  # simple recursion using base case and changing
+  # recursive call
 
   # def insert(name, score, current = @root)
   #   if @root == nil
@@ -50,6 +48,10 @@ class BST
   #     insert(name, score, current.rchild)
   #   end
   # end
+
+
+  # next method uses a base non-recursive insert method
+  # and a recursive insert_helper method
 
   # def insert(name, score, current = @root)
   #   if root? == nil
@@ -72,22 +74,27 @@ class BST
   #   end
   # end
 
-  def insert(name, score, current = @root)
+  def insert(name, score, current = @root, depth = 0)
     if root? == nil
       @root = Node.new(name, score)
+      depth
 
     elsif score < current.data[1]
+      depth += 1
       if current.lchild == nil
         current.lchild = Node.new(name, score)
+        depth
       else
-        insert(name, score, current.lchild)
+        insert(name, score, current.lchild, depth)
       end
 
     elsif score > current.data[1]
+      depth += 1
       if current.rchild == nil
         current.rchild = Node.new(name, score)
+        depth
       else
-        insert(name, score, current.rchild)
+        insert(name, score, current.rchild, depth)
       end
     end
   end
@@ -161,13 +168,13 @@ class BST
     # TODO
   end
 
-  def leaves(current = @root)
+  def leaves
     @leaves = 0
 
-    if current == nil
+    if @root == nil
       return nil
     else
-      leaves_helper(current)
+      leaves_helper(@root)
     end
 
     return @leaves
@@ -188,35 +195,34 @@ class BST
     @leaves
   end
 
-  def height(current = @root)
+  def height
     @height = 0
 
-    if current == nil
+    if @root == nil
       return nil
 
-    elsif current.lchild == nil && current.rchild == nil
+    elsif @root.lchild == nil && @root.rchild == nil
       return 0
     else
-      height_helper(current)
+      height_helper(@root)
     end
 
     return @height
   end
 
   def height_helper(current)
-    if current.lchild != nil
-      @height += 1
-      height_helper(current.lchild)
-
-    elsif current.rchild != nil
-      @height += 1
-      height_helper(current.rchild)
+    if current == nil
+      return @height
     end
+    depth = depth_of(current.data[1])
+    height_helper(current.lchild)
+    @height = depth if depth > @height
+    height_helper(current.rchild)
     return @height
   end
 
+  def health
 
-
-
+  end
 
 end
