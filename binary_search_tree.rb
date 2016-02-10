@@ -1,4 +1,5 @@
 require 'pry'
+require 'csv'
 require_relative 'node'
 class BST
   attr_accessor :root
@@ -120,22 +121,11 @@ class BST
     return @sorted
   end
 
+  def load(file)
+    temp = CSV.read(file)
+    temp.count do |array|
+        array[1].lstrip!
+        insert(array[1], array[0].to_i)
+    end
+  end
 end
-
-
-@tree = BST.new
-@tree.insert("The Godfather", 75)
-@tree.insert("The Simpsons Movie", 100)
-@tree.insert("Star Wars", 90)
-@tree.insert("Scary Movie", 30)
-@tree.insert("Saving Private Ryan", 85)
-@tree.insert("Goonies", 0)
-@tree.insert("Lord of the Rings", 80)
-@tree.insert("Lord of the Rings 2", 82)
-@tree.insert("Goosebumps", 1)
-@tree.insert("Pulp Fiction", 200)
-
-@tree.include?(1)
-@tree.min
-@tree.max
-@tree.sort

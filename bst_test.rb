@@ -67,16 +67,34 @@ class BSTTest < Minitest::Test
   end
 
   def test_can_find_max
-    assert_equal 200, @tree.max
+    hash = {}
+    hash["Pulp Fiction"] = 200
+    assert_equal hash, @tree.max
   end
 
-  def test_can_find_mind
-    assert_equal 0, @tree.min
+  def test_can_find_min
+    hash = {}
+    hash["Goonies"] = 0
+    assert_equal hash, @tree.min
   end
 
   def test_can_sort
-    assert_equal [], @tree.sort
+    sorted = [
+      {"Goonies"=>0},
+      {"Goosebumps"=>1},
+      {"Scary Movie"=>30},
+      {"The Godfather"=>75},
+      {"Lord of the Rings"=>80},
+      {"Lord of the Rings 2"=>82},
+      {"Saving Private Ryan"=>85},
+      {"Star Wars"=>90},
+      {"The Simpsons Movie"=>100},
+      {"Pulp Fiction"=>200}
+    ]
+    assert_equal sorted, @tree.sort
   end
 
-
+  def can_build_new_tree_from_file
+    new_tree = BST.new.load("movies.txt")
+  end
 end
