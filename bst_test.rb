@@ -17,6 +17,7 @@ class BSTTest < Minitest::Test
     @tree.insert("Lord of the Rings", 80)
     @tree.insert("Lord of the Rings 2", 82)
     @tree.insert("Goosebumps", 1)
+    @tree.insert("Pulp Fiction", 200)
   end
 
   def test_can_create_new_tree
@@ -63,6 +64,18 @@ class BSTTest < Minitest::Test
     assert_equal 3, @tree.depth_of(85)
     assert_equal 4, @tree.depth_of(80)
     assert_equal 5, @tree.depth_of(82)
+  end
+
+  def test_can_find_max
+    assert_equal 200, @tree.max
+  end
+
+  def test_can_find_mind
+    assert_equal 0, @tree.min
+  end
+
+  def test_can_sort
+    assert_equal [], @tree.sort
   end
 
 

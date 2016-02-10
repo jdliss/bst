@@ -1,8 +1,11 @@
+require 'pry'
 require_relative 'node'
 class BST
   attr_reader :root
   def initialize(root = nil)
     @root = root
+    @sorted = []
+    @data = {}
   end
 
   def root?
@@ -78,8 +81,67 @@ class BST
   end
 
   def max(current = @root)
-    @root.data[1]
+    if current.rchild == nil
+      return { current.data[0] => current.data[1] }
+    else
+      current = current.rchild
+      max(current)
+    end
+  end
 
+  def min(current = @root)
+    if current.lchild == nil
+      return { current.data[0] => current.data[1] }
+    else
+      current = current.lchild
+      min(current)
+    end
+  end
+
+  # def find_min_node(current = @root)
+  #   if current.lchild == nil
+  #     return current
+  #   else
+  #     current = current.lchild
+  #     find_min_node(current)
+  #   end
+  # end                                 # => :find_min_node
+
+  def sort(current = @root)
+    if current.lchild == nil
+      current.data[1]
+      @data = { current.data[0] => current.data[1] }
+      @sorted.push(@data)
+      if current.rchild == nil
+        @data = { current.data[0] => current.data[1] }
+        @sorted << @data
+      elsif current.rchild != nil
+        if @sorted.include?(current.rchild.data[1]) != true
+          sort(current.rchild)
+        else
+          sort(current)
+        end
+      end
+    else
+      sort(current.lchild)
+    end
+    @sorted
   end
 
 end
+
+
+@root = Node.new("Movie", 10)
+@tree = BST.new
+@tree.insert("The Godfather", 75)
+@tree.insert("The Simpsons Movie", 100)
+@tree.insert("Star Wars", 90)
+@tree.insert("Scary Movie", 30)
+@tree.insert("Saving Private Ryan", 85)
+@tree.insert("Goonies", 0)
+@tree.insert("Lord of the Rings", 80)
+@tree.insert("Lord of the Rings 2", 82)
+@tree.insert("Goosebumps", 1)
+@tree.insert("Pulp Fiction", 200)
+
+@tree.sort
