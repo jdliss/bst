@@ -125,7 +125,9 @@ class BST
     temp = CSV.read(file)
     temp.count do |array|
         array[1].lstrip!
-        insert(array[1], array[0].to_i)
+        if include?(array[0].to_i) != true
+          insert(array[1], array[0].to_i)
+        end
     end
   end
 
@@ -165,12 +167,29 @@ class BST
 
     if current == nil
       return nil
+
+    elsif current.lchild == nil && current.rchild == nil
+      return 0
     else
       height_helper(current)
     end
 
     return @height
   end
+
+  def height_helper(current)
+    if current.lchild != nil
+      @height += 1
+      height_helper(current.lchild)
+
+    elsif current.rchild != nil
+      @height += 1
+      height_helper(current.rchild)
+    end
+    return @height
+  end
+
+
 
 
 

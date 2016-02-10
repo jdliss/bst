@@ -111,4 +111,13 @@ class BSTTest < Minitest::Test
     large_tree.load("movies.txt")
     assert_equal 35, large_tree.leaves
   end
+
+  def test_can_find_hight
+    tree = BST.new
+    tree.insert("root", 50)
+    tree.insert("lchild", 25)
+    tree.insert("rchild", 100)
+
+    assert_equal 1, tree.height
+  end
 end
