@@ -1,7 +1,7 @@
 require 'pry'
 require_relative 'node'
 class BST
-  attr_reader :root
+  attr_accessor :root
   def initialize(root = nil)
     @root = root
   end
@@ -17,26 +17,30 @@ class BST
   def include?(value, current = @root)
     if current == nil
       false
+
+    elsif value == current.data[1]
+      true
+
+    elsif value < current.data[1]
+      include?(value, current.lchild)
+
     else
-      if value == current.data[1]
-        true
-      elsif value < current.data[1]
-        if current.lchild == nil
-          false
-        else
-          current = current.lchild
-          include?(current.data[1], current)
-        end
-      else
-        if current.rchild == nil
-          false
-        else
-          current = current.rchild
-          include?(current.data[1], current)
-        end
-      end
+      include?(value, current.rchild)
     end
   end
+
+
+  # def insert(name, score, current = @root)
+  #   if current == nil
+  #     current = Node.new(name, score)
+  #
+  #   elsif score < current.data[1]
+  #     insert(name, score, current.lchild)
+  #
+  #   else
+  #     insert(name, score, current.rchild)
+  #   end
+  # end
 
   def insert(name, score, current = @root)
     if root? == nil
@@ -62,18 +66,16 @@ class BST
 
   def depth_of(value, current = @root, depth = 0)
     if @root == nil
-      return "Tree empty"
+      return nil
     else
       if value == current.data[1]
         return depth
       elsif value < current.data[1]
         depth += 1
-        current = current.lchild
-        depth_of(value, current, depth)
+        depth_of(value, current.lchild, depth)
       else
         depth += 1
-        current = current.rchild
-        depth_of(value, current, depth)
+        depth_of(value, current.rchild, depth)
       end
     end
   end
@@ -82,8 +84,7 @@ class BST
     if current.rchild == nil
       return { current.data[0] => current.data[1] }
     else
-      current = current.rchild
-      max(current)
+      max(current.rchild)
     end
   end
 
@@ -91,8 +92,7 @@ class BST
     if current.lchild == nil
       return { current.data[0] => current.data[1] }
     else
-      current = current.lchild
-      min(current)
+      min(current.lchild)
     end
   end
 
@@ -123,7 +123,6 @@ class BST
 end
 
 
-@root = Node.new("Movie", 10)
 @tree = BST.new
 @tree.insert("The Godfather", 75)
 @tree.insert("The Simpsons Movie", 100)
@@ -136,4 +135,7 @@ end
 @tree.insert("Goosebumps", 1)
 @tree.insert("Pulp Fiction", 200)
 
+@tree.include?(1)
+@tree.min
+@tree.max
 @tree.sort
