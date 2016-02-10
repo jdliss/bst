@@ -221,8 +221,36 @@ class BST
     return @height
   end
 
-  def health
+  def health(depth)
+    @health_info = []
+    @node = []
+    if @root == nil
+      return nil
 
+    elsif depth == 0
+      node << @root.data[1]; node << 0; node << 100
+      @health_info << node
+      return @health_info
+    else
+      health_helper(value, @root)
+    end
+  end
+
+  def health_helper(value, current, info, node)
+    if depth_of(current) == value
+      node << current.data[1]; node << 0; node << 100
+      @health_info << node
+      return @health_info
+    end
+
+    if current.lchild != nil
+      health_helper(current.lchild)
+    end
+
+    if current.rchild != nil
+      health_helper(current.rchild)
+    end
+    return @health_info
   end
 
 end

@@ -127,4 +127,14 @@ class BSTTest < Minitest::Test
     root_tree.insert("root", 0)
     assert_equal 0, root_tree.height
   end
+
+  def test_return_health_stats
+    tree = BST.new
+    tree.insert("root", 50)
+
+    assert_equal [[50, 0, 100]], tree.health
+
+  end
+
+
 end
