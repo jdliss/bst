@@ -30,9 +30,17 @@ class BST
     end
   end
 
+  def create_root(name, score)
+    if @root.nil?
+      @root = Node.new(name, score)
+    end
+  end
 
   # def insert(name, score, current = @root)
-  #   if current == nil
+  #   if @root == nil
+  #     @root = Node.new(name, score)
+  #
+  #   elsif current == nil
   #     current = Node.new(name, score)
   #
   #   elsif score < current.data[1]
@@ -40,6 +48,27 @@ class BST
   #
   #   else
   #     insert(name, score, current.rchild)
+  #   end
+  # end
+
+  # def insert(name, score, current = @root)
+  #   if root? == nil
+  #     @root = Node.new(name, score)
+  #
+  #   else
+  #     insert_helper(name, score, @root)
+  #   end
+  # end
+  #
+  # def insert_helper(name, score, current)
+  #   if current == nil
+  #     current = Node.new(name, score, current)
+  #
+  #   elsif score < current.data[1]
+  #     insert_helper(name, score, current.lchild)
+  #
+  #   else
+  #     insert_helper(name, score, current.lchild)
   #   end
   # end
 
@@ -51,16 +80,14 @@ class BST
       if current.lchild == nil
         current.lchild = Node.new(name, score)
       else
-        current = current.lchild
-        insert(name, score, current)
+        insert(name, score, current.lchild)
       end
 
     elsif score > current.data[1]
       if current.rchild == nil
         current.rchild = Node.new(name, score)
       else
-        current = current.rchild
-        insert(name, score, current)
+        insert(name, score, current.rchild)
       end
     end
   end
