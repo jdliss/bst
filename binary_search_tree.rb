@@ -121,6 +121,7 @@ class BST
       depth_of(value, current.rchild, depth)
     end
   end
+  
 
   def max(current = @root)
     if current.rchild == nil
