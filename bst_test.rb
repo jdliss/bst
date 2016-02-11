@@ -130,9 +130,26 @@ class BSTTest < Minitest::Test
 
   def test_return_health_stats
     tree = BST.new
-    tree.insert("root", 50)
+    tree.insert("root", 500)
 
-    assert_equal [[50, 0, 100]], tree.health
+    assert_equal [[500, 1, 100]], tree.health(0)
+
+    tree2 = BST.new
+    tree2.insert("level1", 1000)
+    tree2.insert("level1", 250)
+    tree2.insert("level2", 200)
+    tree2.insert("level2", 1100)
+    assert_equal [[250, 2, 50], [1100, 1, 25]], tree2.health(1)
+
+    tree3 = BST.new
+    tree3.insert("Animals United", 98)
+    tree3.insert("Armageddon", 58)
+    tree3.insert("Bill & Ted's Bogus Journey", 36)
+    tree3.insert("Bill & Ted's Excellent Adventure", 93)
+    tree3.insert("Charlie's Angels", 86)
+    tree3.insert("Charlie's Country", 38)
+    tree3.insert("Collateral Damage", 69)
+    assert_equal [[36, 2, 28], [93, 3, 42]], tree3.health(2)
 
   end
 

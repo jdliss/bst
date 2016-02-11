@@ -224,33 +224,62 @@ class BST
   def health(depth)
     @health_info = []
     @node = []
+    @children = 1
     if @root == nil
       return nil
 
     elsif depth == 0
-      node << @root.data[1]; node << 0; node << 100
-      @health_info << node
+      childs = children_counter(@root.data[1], @root)
+      @node << @root.data[1]; @node << childs + 1; @node << 100
+      @health_info << @node
       return @health_info
     else
-      health_helper(value, @root)
+      health_helper(depth, @root)
+      return @health_info
     end
   end
 
-  def health_helper(value, current, info, node)
-    if depth_of(current) == value
-      node << current.data[1]; node << 0; node << 100
-      @health_info << node
+
+  def health_helper(depth, current)
+    if depth_of(current.data[1]) == depth
+      @counter = 0
+      @counter = children_counter(current.data[1], current) + 1
+      @node << current.data[1]
+      @node << @counter
+      @node << ((@counter / (sort.size.to_f)) * 100).floor
+      @health_info << @node
+      @node = []
       return @health_info
+    end
+
+    child_recursion(depth, current)
+  end
+
+
+  def child_recursion(depth, current)
+    if current.lchild != nil
+      health_helper(depth, current.lchild)
+    end
+    if current.rchild != nil
+      health_helper(depth, current.rchild)
+    end
+  end
+
+
+  def children_counter(start, current)
+    if current.data[1] == start
+      @counter = 0
     end
 
     if current.lchild != nil
-      health_helper(current.lchild)
+      @counter += 1
+      children_counter(start, current.lchild)
     end
 
     if current.rchild != nil
-      health_helper(current.rchild)
+      @counter += 1
+      children_counter(start, current.rchild)
     end
-    return @health_info
+    return @counter
   end
-
 end
