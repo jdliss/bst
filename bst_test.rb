@@ -36,10 +36,6 @@ class BSTTest < Minitest::Test
     assert_equal 100, node.data[1]
   end
 
-  def test_is_there_a_root
-    assert_kind_of Array, @tree.root?
-  end
-
   def test_node_has_data
     assert_kind_of String, @root.data[0]
     assert_kind_of Fixnum, @root.data[1]
@@ -150,7 +146,32 @@ class BSTTest < Minitest::Test
     tree3.insert("Charlie's Country", 38)
     tree3.insert("Collateral Damage", 69)
     assert_equal [[36, 2, 28], [93, 3, 42]], tree3.health(2)
+  end
 
+  def test_integration
+    tree = BST.new
+    tree.insert("A Faster Horse", 76)
+    tree.insert("Animals United", 98)
+    assert_equal ["A Faster Horse", 76], tree.root.data
+    assert_equal true, tree.include?(98)
+
+    tree.load("movies.txt")
+    assert_equal tree.insert("New Test Movie", 101), tree.depth_of(101)
+
+    assert_equal 36, tree.leaves
+    assert_equal 14, tree.height
+
+    assert_equal [[17, 71, 70], [75, 4, 3], [80, 20, 19], [99, 3, 2]], tree.health(2)
+
+    hash = {}
+    hash["Cruel Intentions"] = 0
+    assert_equal hash, tree.min
+
+    hash2 = {}
+    hash2["New Test Movie"] = 101
+    assert_equal hash2, tree.max
+
+    assert_equal 9, tree.depth_of(62)
   end
 
 

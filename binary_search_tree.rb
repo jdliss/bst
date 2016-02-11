@@ -7,14 +7,6 @@ class BST
     @root = root
   end
 
-  def root?
-    if @root == nil
-      nil
-    else
-      @root.data
-    end
-  end
-
   def include?(value, current = @root)
     if current == nil
       false
@@ -35,11 +27,8 @@ class BST
   # recursive call
 
   # def insert(name, score, current = @root)
-  #   if @root == nil
+  #   if  == nil
   #     @root = Node.new(name, score)
-  #
-  #   elsif current == nil
-  #     current = Node.new(name, score)
   #
   #   elsif score < current.data[1]
   #     insert(name, score, current.lchild)
@@ -54,7 +43,7 @@ class BST
   # and a recursive insert_helper method
 
   # def insert(name, score, current = @root)
-  #   if root? == nil
+  #   if root == nil
   #     @root = Node.new(name, score)
   #
   #   else
@@ -75,43 +64,61 @@ class BST
   # end
 
   def insert(name, score, current = @root, depth = 0)
-    if root? == nil
+    if root == nil
       @root = Node.new(name, score)
       depth
-
-    elsif score < current.data[1]
-      depth += 1
-      if current.lchild == nil
-        current.lchild = Node.new(name, score)
-        depth
-      else
-        insert(name, score, current.lchild, depth)
-      end
-
-    elsif score > current.data[1]
-      depth += 1
-      if current.rchild == nil
-        current.rchild = Node.new(name, score)
-        depth
-      else
-        insert(name, score, current.rchild, depth)
-      end
+    else
+      insert_helper(name, score, current, depth)
     end
   end
+
+  def insert_helper(name, score, current, depth)
+    if score < current.data[1]
+      insert_left(name, score, current, depth)
+
+    elsif score > current.data[1]
+      insert_right(name, score, current, depth)
+    end
+  end
+
+  def insert_left(name, score, current, depth)
+    depth += 1
+    if current.lchild == nil
+      current.lchild = Node.new(name, score)
+      depth
+    else
+      insert(name, score, current.lchild, depth)
+    end
+  end
+
+  def insert_right(name, score, current, depth)
+    depth += 1
+    if current.rchild == nil
+      current.rchild = Node.new(name, score)
+      depth
+    else
+      insert(name, score, current.rchild, depth)
+    end
+  end
+
 
   def depth_of(value, current = @root, depth = 0)
     if @root == nil
       return nil
     else
-      if value == current.data[1]
-        return depth
-      elsif value < current.data[1]
-        depth += 1
-        depth_of(value, current.lchild, depth)
-      else
-        depth += 1
-        depth_of(value, current.rchild, depth)
-      end
+      depth_of_helper(value, current, depth)
+    end
+  end
+
+  def depth_of_helper(value, current, depth)
+    if value == current.data[1]
+      return depth
+    elsif value < current.data[1]
+      depth += 1
+      depth_of(value, current.lchild, depth)
+    else
+      depth += 1
+      depth_of(value, current.rchild, depth)
     end
   end
 
@@ -162,10 +169,6 @@ class BST
         insert(array[1].lstrip, array[0].to_i)
       end
     end
-  end
-
-  def health
-    # TODO
   end
 
   def leaves
@@ -222,9 +225,7 @@ class BST
   end
 
   def health(depth)
-    @health_info = []
-    @node = []
-    @children = 1
+    @health_info = []; @node = []; @children = 1
     if @root == nil
       return nil
 
@@ -251,7 +252,6 @@ class BST
       @node = []
       return @health_info
     end
-
     child_recursion(depth, current)
   end
 
