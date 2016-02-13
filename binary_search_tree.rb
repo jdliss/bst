@@ -27,7 +27,7 @@ class BST
   # recursive call
 
   # def insert(name, score, current = @root)
-  #   if  == nil
+  #   if  current == nil
   #     @root = Node.new(name, score)
   #
   #   elsif score < current.data[1]
@@ -36,6 +36,7 @@ class BST
   #   else
   #     insert(name, score, current.rchild)
   #   end
+  #   0
   # end
 
 
@@ -121,7 +122,7 @@ class BST
       depth_of(value, current.rchild, depth)
     end
   end
-  
+
 
   def max(current = @root)
     if current.rchild == nil
@@ -141,12 +142,13 @@ class BST
 
   def sort(current = @root)
     @sorted = []
+    sort_help(current) if current
 
-    if current == nil
-      nil
-    else
-      sort_help(current)
-    end
+    # if current == nil
+      # nil
+    # else
+      # sort_help(current)
+    # end
     return @sorted
   end
 

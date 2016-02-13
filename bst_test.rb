@@ -46,10 +46,36 @@ class BSTTest < Minitest::Test
   end
 
   def test_can_insert_node_in_tree
-    assert_equal true, @tree.include?(100)
+    assert @tree.include?(100)
     assert_equal true, @tree.include?(30)
     assert_equal true, @tree.include?(82)
     assert_equal true, @tree.include?(0)
+  end
+
+  def test_insert_adds_first_node_at_index_0
+    new_tree = BST.new
+    result_of_insert = new_tree.insert("Bill & Ted's Excellent Adventure", 61)
+    assert_equal 0, result_of_insert
+  end
+
+  def test_insert_adds_nodes_based_on_value_of_parent
+    new_tree = BST.new
+    first_value = 61
+    second_value = 16
+    new_tree.insert("Bill & Ted's Excellent Adventure", first_value)
+    result_of_insert = new_tree.insert("Johnny English", second_value)
+    assert_equal 1, result_of_insert
+  end
+
+  def test_insert_adds_nodes_based_on_value_of_parent_regardless_or_number_or_nodes_inserted
+    new_tree = BST.new
+    root_value = 61
+    greater_than_root_value = 91
+    value_less_than_root = 50
+    new_tree.insert("Bill & Ted's Excellent Adventure", root_value)
+    new_tree.insert("Johnny English", greater_than_root_value, )
+    result_of_insert = new_tree.insert("Hannibal Buress: Animal Furnace", value_less_than_root)
+    assert_equal 1, result_of_insert
   end
 
   def test_can_find_depth
